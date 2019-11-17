@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
+  public mode = "list";
+  public confirma = false;
   public todos: Todo[] = [];
   public title = "Minhas tarefas";
   public form: FormGroup;
@@ -26,7 +28,7 @@ export class AppComponent {
     this.load();
   }
   public add() {
-    const title: string = this.form.controls.title.value;
+    const title: string = this.firstToUpper(this.form.controls.title.value);
     const id = this.todos.length + 1;
     this.todos.push(new Todo(id, title, false));
     this.save();
@@ -61,6 +63,28 @@ export class AppComponent {
   }
   load() {
     const data = localStorage.getItem("todos");
-    this.todos = JSON.parse(data);
+    if (data) {
+      this.todos = JSON.parse(data);
+    } else {
+      this.todos = [];
+    }
+  }
+
+  changeMode(value: string) {
+    this.mode = value;
+  }
+
+  firstToUpper(value: string): string {
+    const vAux: string = value.trim();
+    let vAux2: string = vAux[0].toUpperCase();
+    vAux2 += vAux.substring(1);
+    return vAux2;
+  }
+
+  msgconfirm() {
+    this.confirma = true;
+    setTimeout(async () => {
+      this.confirma = await false;
+    }, 1500);
   }
 }

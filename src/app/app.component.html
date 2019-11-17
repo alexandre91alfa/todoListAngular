@@ -1,13 +1,10 @@
 <div class="todo">
-  <h1>{{ title }}</h1>
+  <h1 class="title animated jackInTheBox">{{ title }}</h1>
   <h2 *ngIf="todos.length == 0">Sem tarefas no momento</h2>
-  <div>
+  <div class="animated flipInX" *ngIf="mode == 'list'">
     <ul>
       <li *ngFor="let item of todos">
-        {{ item.id }}: {{ item.title }} |<button
-          *ngIf="!item.done"
-          (click)="markAsDone(item)"
-        >
+        {{ item.title }} |<button *ngIf="!item.done" (click)="markAsDone(item)">
           Concluir</button
         ><button *ngIf="item.done" (click)="markAsUndone(item)">Refazer</button
         >|<button (click)="remove(item)">
@@ -17,6 +14,11 @@
     </ul>
   </div>
   <div>
+    <h2 class="conf animated fadeIn" *ngIf="mode !== list && confirma">
+      Tarefa gravada com Sucesso
+    </h2>
+  </div>
+  <div class="form" *ngIf="mode !== 'list'">
     <form [formGroup]="form">
       <fieldset>
         <label>Tarefa: </label>
@@ -26,7 +28,13 @@
           maxlength="255"
           formControlName="title"
         />
-        <button [disabled]="form.invalid" (click)="add()">Salvar</button><br />
+        <button
+          [disabled]="form.invalid"
+          (click)="add()"
+          (click)="msgconfirm()"
+        >
+          Salvar</button
+        ><br />
         <small
           class="invalid"
           *ngIf="!form.controls.title.pristine && form.controls.title.invalid"
@@ -37,5 +45,21 @@
       </fieldset>
     </form>
   </div>
+  <button
+    class="add-button animated fadeInUp button"
+    (click)="changeMode('add')"
+    *ngIf="mode == 'list'"
+  >
+    <i class="fas fa-plus-circle"></i>
+    NOVA TAREFA
+  </button>
+  <button
+    class="add-button animated fadeInUp button"
+    (click)="changeMode('list')"
+    *ngIf="mode !== 'list'"
+  >
+    <i class="fas fa-times"></i>
+    CANCELAR
+  </button>
 </div>
 <!-- <router-outlet></router-outlet> -->

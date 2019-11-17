@@ -12,3 +12,12 @@ result
     console.log(result);
   })
   .catch(err => {});
+
+function firstToUpper(value) {
+  const vAux = value.trim();
+  let vAux2 = vAux[0].toUpperCase();
+  vAux2 += vAux.substring(1);
+  return vAux2;
+}
+
+console.log(firstToUpper("alexandre jose"));

@@ -1,11 +1,10 @@
-div.todo{
-    background-color: aliceblue;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+div.todo {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.invalid{
-    color: red;
+.invalid {
+  color: red;
 }
