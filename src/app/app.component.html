@@ -1,6 +1,41 @@
-<h1>{{ title }}</h1>
-<ul>
-  <li *ngFor="let item of todos">{{ item }}</li>
-</ul>
-<button (click)="add()">Adicionar todo</button>
-<router-outlet></router-outlet>
+<div class="todo">
+  <h1>{{ title }}</h1>
+  <h2 *ngIf="todos.length == 0">Sem tarefas no momento</h2>
+  <div>
+    <ul>
+      <li *ngFor="let item of todos">
+        {{ item.id }}: {{ item.title }} |<button
+          *ngIf="!item.done"
+          (click)="markAsDone(item)"
+        >
+          Concluir</button
+        ><button *ngIf="item.done" (click)="markAsUndone(item)">Refazer</button
+        >|<button (click)="remove(item)">
+          Remove</button
+        >|
+      </li>
+    </ul>
+  </div>
+  <div>
+    <form [formGroup]="form">
+      <fieldset>
+        <label>Tarefa: </label>
+        <input
+          type="text"
+          placeholder="Titulo da Tarefa"
+          maxlength="255"
+          formControlName="title"
+        />
+        <button [disabled]="form.invalid" (click)="add()">Salvar</button><br />
+        <small
+          class="invalid"
+          *ngIf="!form.controls.title.pristine && form.controls.title.invalid"
+          >Este campo deve conter entre 5 e 255
+          <!-- pristine verifica se foi alterado -->
+          caracteres</small
+        >
+      </fieldset>
+    </form>
+  </div>
+</div>
+<!-- <router-outlet></router-outlet> -->
